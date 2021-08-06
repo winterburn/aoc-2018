@@ -13,5 +13,24 @@ void InputHandler::read_file(std::string path)
         InputHandler::input.insert(it, line);
         it = InputHandler::input.end();
     }
+    InputHandler::input_size = input.size();
     inputFile.close();
+}
+
+std::string InputHandler::get_line(int line_number){
+    return InputHandler::input[line_number];
+}
+
+std::vector<std::string> InputHandler::get_line_regex(int line_number) {
+    std::smatch results;
+    std::regex_search(InputHandler::input[line_number], results, InputHandler::regex);
+    std::vector<std::string> matches;
+    for (int i = 1; i < results.size(); i++) {
+        matches.push_back(results[i]);
+    }
+    return matches;
+}
+
+void InputHandler::set_regex(std::string regex) {
+    InputHandler::regex = std::regex(regex);
 }
